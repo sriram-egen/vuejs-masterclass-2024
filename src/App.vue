@@ -5,6 +5,10 @@ const { activeError } = storeToRefs(useErrorStore())
 onErrorCaptured((error) => {
   errorStore.setError({ error })
 })
+
+onMounted(() => {
+  useAuthStore().trackAuthChanges()
+})
 </script>
 
 <template>
