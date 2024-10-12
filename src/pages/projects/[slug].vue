@@ -1,24 +1,25 @@
 <script setup lang="ts">
-import { projectQuery } from '@/utils/supaQueries';
-import type { Project } from '@/utils/supaQueries';
+import { projectQuery } from '@/utils/supaQueries'
+import type { Project } from '@/utils/supaQueries'
 
 const route = useRoute('/projects/[slug]')
 
 const project = ref<Project | null>(null)
 
-
-watch(() => project.value?.name, () => {
-  usePageStore().pageData.title = `Project: ${project.value?.name || ''}`
-})
+watch(
+  () => project.value?.name,
+  () => {
+    usePageStore().pageData.title = `Project: ${project.value?.name || ''}`
+  }
+)
 
 const getProjects = async () => {
-  const { data, error } = await projectQuery(route.params.slug)
+  const { data, error, status } = await projectQuery(route.params.slug)
 
-  if (error) console.log(error)
+  if (error) useErrorStore().setError({ error, customCode: status })
 
   project.value = data
 }
-
 
 await getProjects()
 </script>
@@ -43,8 +44,11 @@ await getProjects()
       <TableHead> Collaborators </TableHead>
       <TableCell>
         <div class="flex">
-          <Avatar class="-mr-4 border border-primary hover:scale-110 transition-transform"
-            v-for="collab in project.collaborators" :key="collab">
+          <Avatar
+            class="-mr-4 border border-primary hover:scale-110 transition-transform"
+            v-for="collab in project.collaborators"
+            :key="collab"
+          >
             <RouterLink class="w-full h-full flex items-center justify-center" to="">
               <AvatarImage src="" alt="" />
               <AvatarFallback> </AvatarFallback>
@@ -69,9 +73,9 @@ await getProjects()
           </TableHeader>
           <TableBody>
             <TableRow v-for="task in project.tasks" :key="task">
-              <TableCell> {{task.name}} </TableCell>
+              <TableCell> {{ task.name }} </TableCell>
               <TableCell> {{ task.status }} </TableCell>
-              <TableCell> {{task.due_date}} </TableCell>
+              <TableCell> {{ task.due_date }} </TableCell>
             </TableRow>
           </TableBody>
         </Table>

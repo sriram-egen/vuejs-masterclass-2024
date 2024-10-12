@@ -2,8 +2,11 @@
 
 import { fakerEN_US as faker } from '@faker-js/faker'
 import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(process.env.VITE_SUPABASE_URL, process.env.SERVICE_ROLE_KEY)
+console.log(process.env)
+const supabase = createClient(
+  'https://sodlbtaqnxcbddmhnapu.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNvZGxidGFxbnhjYmRkbWhuYXB1Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTcyODczMjk2OCwiZXhwIjoyMDQ0MzA4OTY4fQ.hYHXZ5SpHu6h8EYtydGFpIJFVJQTcv_Jlwt2ea7Ypbo'
+)
 
 const logErrorAndExit = (tableName, error) => {
   console.error(

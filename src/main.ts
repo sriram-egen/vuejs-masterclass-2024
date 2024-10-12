@@ -12,4 +12,7 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 
+// To handle error in higher level
+// app.config.errorHandler = (error) => {}
+
 app.mount('#app')

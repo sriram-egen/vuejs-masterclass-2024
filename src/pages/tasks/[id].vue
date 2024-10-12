@@ -1,24 +1,26 @@
 <script setup lang="ts">
-import { taskQuery, type Task } from '@/utils/supaQueries';
+import { taskQuery, type Task } from '@/utils/supaQueries'
 
 const route = useRoute('/tasks/[id]')
 
 const task = ref<Task | null>(null)
 
-watch(() => task.value?.id, () => {
-  usePageStore().pageData.title = `Task: ${task.value?.name || ''}`
-})
+watch(
+  () => task.value?.id,
+  () => {
+    usePageStore().pageData.title = `Task: ${task.value?.name || ''}`
+  }
+)
 
 const getTasks = async () => {
-  const { data, error } = await taskQuery(route.params.id)
-  
-  if (error) console.log(error)
+  const { data, error, status } = await taskQuery(route.params.id)
+
+  if (error) useErrorStore().setError({ error, customCode: status})
 
   task.value = data
 }
 
 await getTasks()
-
 </script>
 
 <template>
@@ -49,8 +51,11 @@ await getTasks()
       <TableHead> Collaborators </TableHead>
       <TableCell>
         <div class="flex">
-          <Avatar class="-mr-4 border border-primary hover:scale-110 transition-transform"
-            v-for="collab in task.collaborators" :key="collab">
+          <Avatar
+            class="-mr-4 border border-primary hover:scale-110 transition-transform"
+            v-for="collab in task.collaborators"
+            :key="collab"
+          >
             <RouterLink class="w-full h-full flex items-center justify-center" to="">
               <AvatarImage src="" alt="" />
               <AvatarFallback> </AvatarFallback>
@@ -66,8 +71,10 @@ await getTasks()
         Comments cards goes in here..
 
         <div class="flex flex-col justify-between p-3 bg-muted my-2 rounded-md">
-          <textarea placeholder="Add your comment.."
-            class="w-full max-w-full overflow-y-auto prose-sm prose border rounded dark:prose-invert hover:border-muted bg-background border-muted p-3">
+          <textarea
+            placeholder="Add your comment.."
+            class="w-full max-w-full overflow-y-auto prose-sm prose border rounded dark:prose-invert hover:border-muted bg-background border-muted p-3"
+          >
           </textarea>
           <div class="flex justify-between mt-3">
             <Button> Comment </Button>
