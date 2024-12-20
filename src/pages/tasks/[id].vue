@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { taskQuery, type Task } from '@/utils/supaQueries'
 
-const route = useRoute('/tasks/[id]')
+const {id} = useRoute('/tasks/[id]').params
 
-const task = ref<Task | null>(null)
+const tasksLoader = useTasksStore()
+const {task} = storeToRefs(tasksLoader)
+const { getTask, updateTask } = tasksLoader
 
 watch(
   () => task.value?.id,
@@ -12,28 +14,30 @@ watch(
   }
 )
 
-const getTasks = async () => {
-  const { data, error, status } = await taskQuery(route.params.id)
+await getTask(id)
 
-  if (error) useErrorStore().setError({ error, customCode: status})
+const { getProfilesByIds } = useCollabs()
 
-  task.value = data
-}
-
-await getTasks()
+const collabs = task.value?.collaborators
+  ? await getProfilesByIds(task.value?.collaborators)
+  : []
 </script>
 
 <template>
   <Table v-if="task">
     <TableRow>
       <TableHead> Name </TableHead>
-      <TableCell> {{ task.name }}</TableCell>
+        <AppInPlaceEditText v-model="task.name" @commit="updateTask" />
     </TableRow>
     <TableRow>
       <TableHead> Description </TableHead>
       <TableCell>
-        {{ task.description }}
-      </TableCell>
+ <AppInPlaceEditTextarea
+          class="h-20"
+          v-model="task.description"
+          @commit="updateTask"
+        />
+        </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Assignee </TableHead>
@@ -45,7 +49,12 @@ await getTasks()
     </TableRow>
     <TableRow>
       <TableHead> Status </TableHead>
-      <TableCell>{{ task.status }}</TableCell>
+      <TableCell>
+      <AppInPlaceEditStatus
+          v-model="task.status"
+          @commit="updateTask"
+        />
+        </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Collaborators </TableHead>
@@ -53,11 +62,17 @@ await getTasks()
         <div class="flex">
           <Avatar
             class="-mr-4 border border-primary hover:scale-110 transition-transform"
-            v-for="collab in task.collaborators"
-            :key="collab"
+            v-for="collab in collabs"
+            :key="collab.id"
           >
-            <RouterLink class="w-full h-full flex items-center justify-center" to="">
-              <AvatarImage src="" alt="" />
+          <RouterLink
+              class="w-full h-full flex items-center justify-center"
+              :to="{
+                name: '/users/[username]',
+                params: { username: collab.username }
+              }"
+            >
+              <AvatarImage :src="collab.avatar_url || ''" alt="" />
               <AvatarFallback> </AvatarFallback>
             </RouterLink>
           </Avatar>

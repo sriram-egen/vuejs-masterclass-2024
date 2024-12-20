@@ -71,3 +71,8 @@ export const groupedProfilesQuery = (userIds: string[]) =>
     .select('username, avatar_url, id, full_name')
     .in('id', userIds)
 export type Collabs = QueryData<ReturnType<typeof groupedProfilesQuery>>
+
+
+export const updateTaskQuery = (updatedTask = {}, id: number) => {
+  return supabase.from('tasks').update(updatedTask).eq('id', id)
+}
