@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { taskQuery, type Task } from '@/utils/supaQueries'
-
-const {id} = useRoute('/tasks/[id]').params
+const { id } = useRoute('/tasks/[id]').params
 
 const tasksLoader = useTasksStore()
-const {task} = storeToRefs(tasksLoader)
+const { task } = storeToRefs(tasksLoader)
 const { getTask, updateTask } = tasksLoader
 
 watch(
-  () => task.value?.id,
+  () => task.value?.name,
   () => {
     usePageStore().pageData.title = `Task: ${task.value?.name || ''}`
   }
@@ -27,56 +25,53 @@ const collabs = task.value?.collaborators
   <Table v-if="task">
     <TableRow>
       <TableHead> Name </TableHead>
+      <TableCell>
         <AppInPlaceEditText v-model="task.name" @commit="updateTask" />
+      </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Description </TableHead>
       <TableCell>
- <AppInPlaceEditTextarea
+        <AppInPlaceEditTextarea
           class="h-20"
           v-model="task.description"
           @commit="updateTask"
         />
-        </TableCell>
-    </TableRow>
-    <TableRow>
-      <TableHead> Assignee </TableHead>
-      <TableCell>Lorem ipsum</TableCell>
+      </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Project </TableHead>
-      <TableCell> {{ task.projects?.name }} </TableCell>
+      <TableCell>{{ task.projects?.name }}</TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Status </TableHead>
       <TableCell>
-      <AppInPlaceEditStatus
-          v-model="task.status"
-          @commit="updateTask"
-        />
-        </TableCell>
+        <AppInPlaceEditStatus v-model="task.status" @commit="updateTask" />
+      </TableCell>
     </TableRow>
     <TableRow>
       <TableHead> Collaborators </TableHead>
       <TableCell>
-        <div class="flex">
-          <Avatar
-            class="-mr-4 border border-primary hover:scale-110 transition-transform"
-            v-for="collab in collabs"
-            :key="collab.id"
-          >
-          <RouterLink
-              class="w-full h-full flex items-center justify-center"
-              :to="{
-                name: '/users/[username]',
-                params: { username: collab.username }
-              }"
+        <TableCell>
+          <div class="flex">
+            <Avatar
+              class="-mr-4 border border-primary hover:scale-110 transition-transform"
+              v-for="collab in collabs"
+              :key="collab.id"
             >
-              <AvatarImage :src="collab.avatar_url || ''" alt="" />
-              <AvatarFallback> </AvatarFallback>
-            </RouterLink>
-          </Avatar>
-        </div>
+              <RouterLink
+                class="w-full h-full flex items-center justify-center"
+                :to="{
+                  name: '/users/[username]',
+                  params: { username: collab.username }
+                }"
+              >
+                <AvatarImage :src="collab.avatar_url || ''" alt="" />
+                <AvatarFallback> </AvatarFallback>
+              </RouterLink>
+            </Avatar>
+          </div>
+        </TableCell>
       </TableCell>
     </TableRow>
     <TableRow class="hover:bg-transparent">
@@ -110,3 +105,17 @@ const collabs = task.value?.collaborators
     </TableRow>
   </Table>
 </template>
+
+<style>
+th {
+  @apply w-[100px];
+}
+
+h2 {
+  @apply mb-4 text-lg font-semibold w-fit;
+}
+
+.table-container {
+  @apply overflow-hidden overflow-y-auto rounded-md bg-slate-900 h-80;
+}
+</style>

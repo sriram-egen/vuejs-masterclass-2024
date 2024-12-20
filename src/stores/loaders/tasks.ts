@@ -1,15 +1,19 @@
-import { taskQuery, tasksWithProjectsQuery, updateTaskQuery } from "@/utils/supaQueries"
-import type { Task, TasksWithProjects, } from "@/utils/supaQueries"
-import { useMemoize } from "@vueuse/core"
+import {
+  taskQuery,
+  tasksWithProjectsQuery,
+  updateTaskQuery
+} from '@/utils/supaQueries'
+import { useMemoize } from '@vueuse/core'
+import type { Task, TasksWithProjects } from '@/utils/supaQueries'
 
 export const useTasksStore = defineStore('tasks-store', () => {
   const tasks = ref<TasksWithProjects | null>(null)
   const task = ref<Task | null>(null)
-
-  const loadTasks = useMemoize(async (key: string) => await tasksWithProjectsQuery)
-  const loadTask = useMemoize(
-    async (id: string) => await taskQuery(id)
+  const loadTasks = useMemoize(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async (id: string) => await tasksWithProjectsQuery
   )
+  const loadTask = useMemoize(async (slug: string) => await taskQuery(slug))
 
   interface ValidateCacheParams {
     ref: typeof tasks | typeof task
@@ -41,9 +45,10 @@ export const useTasksStore = defineStore('tasks-store', () => {
   const getTasks = async () => {
     tasks.value = null
 
-    const { data, error, status } = await tasksWithProjectsQuery
+    const { data, error, status } = await loadTasks('tasks')
 
     if (error) useErrorStore().setError({ error, customCode: status })
+
     if (data) tasks.value = data
 
     validateCache({
@@ -57,16 +62,17 @@ export const useTasksStore = defineStore('tasks-store', () => {
   const getTask = async (id: string) => {
     task.value = null
 
-    const { data, error, status } = await taskQuery(id)
+    const { data, error, status } = await loadTask(id)
 
     if (error) useErrorStore().setError({ error, customCode: status })
+
     if (data) task.value = data
 
     validateCache({
       ref: task,
       query: taskQuery,
       key: id,
-      loaderFn: loadTask,
+      loaderFn: loadTask
     })
   }
 
@@ -74,10 +80,16 @@ export const useTasksStore = defineStore('tasks-store', () => {
     if (!task.value) return
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { tasks, id, projects, ...taskProperties } = task.value
+    const { projects, id, ...taskProperties } = task.value
 
     await updateTaskQuery(taskProperties, task.value.id)
   }
 
-  return { tasks, getTasks, task, getTask, updateTask }
+  return {
+    tasks,
+    getTasks,
+    getTask,
+    task,
+    updateTask
+  }
 })
