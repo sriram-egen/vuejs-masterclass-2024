@@ -6,6 +6,7 @@
 export {}
 declare global {
   const EffectScope: typeof import('vue')['EffectScope']
+  const Projects: typeof import('./src/stores/loaders/projects')['Projects']
   const acceptHMR: typeof import('pinia')['acceptHMR']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const computed: typeof import('vue')['computed']
@@ -20,6 +21,7 @@ declare global {
   const effectScope: typeof import('vue')['effectScope']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
+  const getProjects: typeof import('./src/stores/loaders/projects')['getProjects']
   const h: typeof import('vue')['h']
   const inject: typeof import('vue')['inject']
   const isProxy: typeof import('vue')['isProxy']
@@ -43,6 +45,8 @@ declare global {
   const onServerPrefetch: typeof import('vue')['onServerPrefetch']
   const onUnmounted: typeof import('vue')['onUnmounted']
   const onUpdated: typeof import('vue')['onUpdated']
+  const proj: typeof import('./src/stores/loaders/projects')['proj']
+  const projects: typeof import('./src/stores/loaders/projects')['projects']
   const provide: typeof import('vue')['provide']
   const reactive: typeof import('vue')['reactive']
   const readonly: typeof import('vue')['readonly']
@@ -66,6 +70,8 @@ declare global {
   const useFormErrors: typeof import('./src/composables/formErrors')['useFormErrors']
   const useLink: typeof import('vue-router')['useLink']
   const usePageStore: typeof import('./src/stores/page')['usePageStore']
+  const useProjectStore: typeof import('./src/stores/loaders/projects')['useProjectStore']
+  const useProjectsStore: typeof import('./src/stores/loaders/projects')['useProjectsStore']
   const useRoute: typeof import('vue-router')['useRoute']
   const useRouter: typeof import('vue-router')['useRouter']
   const useSlots: typeof import('vue')['useSlots']
