@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabaseClient'
+import type { CreateNewTask } from '@/types/CreateNewForm'
 import type { QueryData } from '@supabase/supabase-js'
 
 export const tasksWithProjectsQuery = supabase.from('tasks').select(`
@@ -55,6 +56,14 @@ export const taskQuery = (id: string) => {
 }
 export type Task = QueryData<ReturnType<typeof taskQuery>>
 
+export const updateTaskQuery = (updatedTask = {}, id: number) => {
+  return supabase.from('tasks').update(updatedTask).eq('id', id)
+}
+
+export const deleteTaskQuery = (id: number) => {
+  return supabase.from('tasks').delete().eq('id', id)
+}
+
 export const profileQuery = ({
   column,
   value
@@ -65,6 +74,8 @@ export const profileQuery = ({
   return supabase.from('profiles').select().eq(column, value).single()
 }
 
+export const profilesQuery = supabase.from('profiles').select(`id, full_name`)
+
 export const groupedProfilesQuery = (userIds: string[]) =>
   supabase
     .from('profiles')
@@ -72,7 +83,6 @@ export const groupedProfilesQuery = (userIds: string[]) =>
     .in('id', userIds)
 export type Collabs = QueryData<ReturnType<typeof groupedProfilesQuery>>
 
-
-export const updateTaskQuery = (updatedTask = {}, id: number) => {
-  return supabase.from('tasks').update(updatedTask).eq('id', id)
+export const createNewTaskQuery = (newTask: CreateNewTask) => {
+  return supabase.from('tasks').insert(newTask)
 }
