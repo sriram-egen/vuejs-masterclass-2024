@@ -10,6 +10,7 @@ create table
     bio text default null,
     mode text default 'dark' not null,
     avatar_url text default null,
+    role text DEFAULT 'user' NOT NULL,
     
     primary key (id)
   );

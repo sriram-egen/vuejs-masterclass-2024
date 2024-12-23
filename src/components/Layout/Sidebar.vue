@@ -4,7 +4,7 @@ import type { MenuInjectionOptions } from '@/utils/injectionKeys'
 import { useWindowSize } from '@vueuse/core'
 const { profile } = storeToRefs(useAuthStore())
 
-const links = [
+const links = ref([
   {
     title: 'Dashboard',
     to: '/',
@@ -20,7 +20,7 @@ const links = [
     to: '/tasks',
     icon: 'lucide:badge-check'
   }
-]
+])
 
 const accountLinks = computed(() => {
   return [
@@ -38,6 +38,13 @@ const accountLinks = computed(() => {
 
 const router = useRouter()
 
+if(profile.value && profile.value.role==='admin'){
+  links.value.push({
+    title: 'Admin',
+    to: '/admin',
+    icon: 'lucide:badge-check'
+  })
+}
 const executeAction = async (linkTitle: string) => {
   if (linkTitle === 'Sign Out') {
     const { logout } = await import('@/utils/supaAuth')

@@ -17,6 +17,7 @@ export type Database = {
           full_name: string
           id: string
           mode: string
+          role: string
           username: string
         }
         Insert: {
@@ -26,6 +27,7 @@ export type Database = {
           full_name: string
           id: string
           mode?: string
+          role?: string
           username: string
         }
         Update: {
@@ -35,6 +37,7 @@ export type Database = {
           full_name?: string
           id?: string
           mode?: string
+          role?: string
           username?: string
         }
         Relationships: []
@@ -66,6 +69,36 @@ export type Database = {
           name?: string
           slug?: string
           status?: Database["public"]["Enums"]["current_status"]
+        }
+        Relationships: []
+      }
+      resources: {
+        Row: {
+          created_at: string
+          description: string
+          id: number
+          slug: string
+          status: Database["public"]["Enums"]["resources_status"]
+          title: string
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string
+          id?: never
+          slug: string
+          status?: Database["public"]["Enums"]["resources_status"]
+          title: string
+          url: string
+        }
+        Update: {
+          created_at?: string
+          description?: string
+          id?: never
+          slug?: string
+          status?: Database["public"]["Enums"]["resources_status"]
+          title?: string
+          url?: string
         }
         Relationships: []
       }
@@ -129,6 +162,7 @@ export type Database = {
     }
     Enums: {
       current_status: "in-progress" | "completed"
+      resources_status: "approved" | "pending"
     }
     CompositeTypes: {
       [_ in never]: never

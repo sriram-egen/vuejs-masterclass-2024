@@ -27,7 +27,7 @@ const PrimaryTestUserExists = async () => {
   const { data, error } = await supabase
     .from('profiles')
     .select('id, username')
-    .eq('username', 'testaccount1')
+    .eq('username', 'sriram')
     .single()
 
   if (error) {
@@ -127,6 +127,31 @@ const seedTasks = async (numEntries, projectsIds, userId) => {
   return data
 }
 
+const seedResources = async (numEntries, userId) => {
+  logStep('Seeding resources...')
+  const resources = []
+
+  for (let i = 0; i < numEntries; i++) {
+    const title = faker.lorem.words(3)
+
+    resources.push({
+      title: title,
+      slug: title.toLocaleLowerCase().replace(/ /g, '-'),
+      description: faker.lorem.paragraphs(2),
+      url: faker.internet.url(),
+      status: faker.helpers.arrayElement(['approved', 'pending'])
+    })
+  }
+
+  const { data, error } = await supabase.from('resources').insert(resources).select('id')
+
+  if (error) return logErrorAndExit('Resources', error)
+
+  logStep('Resources seeded successfully.')
+
+  return data
+}
+
 const seedDatabase = async (numEntriesPerTable) => {
   let userId
 
@@ -141,6 +166,7 @@ const seedDatabase = async (numEntriesPerTable) => {
 
   const projectsIds = (await seedProjects(numEntriesPerTable, userId)).map((project) => project.id)
   await seedTasks(numEntriesPerTable, projectsIds, userId)
+  await seedResources(numEntriesPerTable, userId)
 }
 
 const numEntriesPerTable = 10

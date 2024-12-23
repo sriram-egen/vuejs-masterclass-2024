@@ -66,6 +66,10 @@ declare module 'vue' {
     TableHead: typeof import('./src/components/ui/table/TableHead.vue')['default']
     TableHeader: typeof import('./src/components/ui/table/TableHeader.vue')['default']
     TableRow: typeof import('./src/components/ui/table/TableRow.vue')['default']
+    Tabs: typeof import('./src/components/ui/tabs/Tabs.vue')['default']
+    TabsContent: typeof import('./src/components/ui/tabs/TabsContent.vue')['default']
+    TabsList: typeof import('./src/components/ui/tabs/TabsList.vue')['default']
+    TabsTrigger: typeof import('./src/components/ui/tabs/TabsTrigger.vue')['default']
     TopNavbar: typeof import('./src/components/Layout/TopNavbar.vue')['default']
   }
 }
