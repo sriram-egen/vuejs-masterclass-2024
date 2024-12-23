@@ -1,6 +1,7 @@
 import { RouterLink } from 'vue-router'
 import type { ColumnDef } from '@tanstack/vue-table'
 import type { Resources } from '../supaQueries'
+import { Button } from '@/components/ui/button'
 
 export const columns = (): ColumnDef<Resources[0]>[] => [
   {
@@ -33,19 +34,39 @@ export const columns = (): ColumnDef<Resources[0]>[] => [
     header: () => h('div', { class: 'text-left' }, 'URL'),
     cell: ({ row }) => {
       return h(
-        'a',
+        'div',
         {
-          class: 'text-left font-medium',
-          href: row.original.url,
-          target: '_blank'
+          class: "flex flex-col justify-center "
         },
-        h(
-          'iconify-icon',
+        [h('a',
           {
-            icon: 'lucide:square-arrow-out-up-right',
+            class: 'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2',
+            href: row.original.url,
+            target: '_blank'
           },
-          row.getValue('url')
-        )
+          h(
+            'iconify-icon',
+            {
+              icon: 'lucide:square-arrow-out-up-right',
+            },
+            row.getValue('url')
+          )),
+        h(
+          Button,
+          {
+            variant: 'ghost',
+            onClick: () => {
+              useResourcesStore().deleteResource(parseInt(row.original.id))
+            },
+          },
+          h(
+            'iconify-icon',
+            {
+              icon: 'lucide:trash-2',
+            },
+            row.getValue('url')
+          ))
+        ]
       )
     }
   }

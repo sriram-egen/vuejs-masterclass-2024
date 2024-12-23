@@ -97,3 +97,7 @@ export const pendingResourcesQuery = supabase.from('resources').select().eq('sta
 export const createNewResourceQuery = (newResource: CreateNewResource) => {
   return supabase.from('resources').insert(newResource)
 }
+
+export const deleteResourceQuery = (id: number) => {
+  return supabase.from('resources').delete().eq('id', id)
+}

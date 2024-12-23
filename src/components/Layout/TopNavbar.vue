@@ -5,6 +5,14 @@ const { profile } = storeToRefs(useAuthStore())
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
+const router = useRouter()
+
+const executeLogoutAction = async () => {
+    const { logout } = await import('@/utils/supaAuth')
+    const isLoggedOut = await logout()
+
+    if (isLoggedOut) router.push('/login')
+}
 </script>
 
 <template>
@@ -53,6 +61,9 @@ const toggleDark = useToggle(isDark)
               >
                 Profile
               </RouterLink>
+            </DropdownMenuItem>
+            <DropdownMenuItem @click="executeLogoutAction">
+              <p>Sign out</p>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

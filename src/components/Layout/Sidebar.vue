@@ -2,57 +2,19 @@
 import { menuKey } from '@/utils/injectionKeys'
 import type { MenuInjectionOptions } from '@/utils/injectionKeys'
 import { useWindowSize } from '@vueuse/core'
-const { profile } = storeToRefs(useAuthStore())
 
-const links = ref([
+const links = ([
   {
-    title: 'Dashboard',
+    title: 'Resources',
     to: '/',
     icon: 'lucide:house'
   },
   {
-    title: 'Projects',
-    to: '/projects',
-    icon: 'lucide:building-2'
-  },
-  {
-    title: 'My Tasks',
-    to: '/tasks',
-    icon: 'lucide:badge-check'
-  }
-])
-
-const accountLinks = computed(() => {
-  return [
-    {
-      title: 'Profile',
-      to: `/users/${profile.value?.username}`,
-      icon: 'lucide:user'
-    },
-    {
-      title: 'Sign Out',
-      icon: 'lucide:log-out'
-    }
-  ]
-})
-
-const router = useRouter()
-
-if(profile.value && profile.value.role==='admin'){
-  links.value.push({
     title: 'Admin',
     to: '/admin',
     icon: 'lucide:badge-check'
-  })
-}
-const executeAction = async (linkTitle: string) => {
-  if (linkTitle === 'Sign Out') {
-    const { logout } = await import('@/utils/supaAuth')
-    const isLoggedOut = await logout()
-
-    if (isLoggedOut) router.push('/login')
   }
-}
+])
 
 defineEmits(['taskClicked'])
 
@@ -98,10 +60,6 @@ watchEffect(() => {
     <nav class="flex flex-col gap-2 justify-between h-full relative">
       <div>
         <SidebarLinks :links="links" />
-      </div>
-
-      <div class="border-y text-center bg-background py-3">
-        <SidebarLinks :links="accountLinks" @actionClicked="executeAction" />
       </div>
     </nav>
   </aside>

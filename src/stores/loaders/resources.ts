@@ -1,5 +1,6 @@
 import {
   approvedResourcesQuery,
+  deleteResourceQuery,
   pendingResourcesQuery,
   resourcesQuery,
 } from '@/utils/supaQueries'
@@ -123,6 +124,11 @@ export const useResourcesStore = defineStore('resources-store', () => {
   //   await updateProjectQuery(projectProperties, project.value.id)
   // }
 
+  const deleteResource = async (id: number) => {
+      if (!id || typeof id !== 'number') return
+    await deleteResourceQuery(id)
+  }
+
   return {
     resources,
     approvedResources,
@@ -130,5 +136,6 @@ export const useResourcesStore = defineStore('resources-store', () => {
     getResources,
     getApprovedResources,
     getPendingResources,
+    deleteResource
   }
 })
