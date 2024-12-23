@@ -11,14 +11,14 @@ usePageStore().pageData.title = "Resources"
 
 const resourcesLoader = useResourcesStore()
 const { approvedResources } = storeToRefs(resourcesLoader)
-const { getApprovedResources, getPendingResources } = resourcesLoader
+const { getApprovedResources } = resourcesLoader
 
 await getApprovedResources()
 
 </script>
 
 <template>
-    <div class="grid grid-cols-3 gap-4" >
+    <div class="grid md:grid-cols-3 lg:grid-cols-5 sm:grid-cols-2 gap-4" >
       <Card v-for="resource in approvedResources" :key="resource.id" class="flex flex-col justify-between" >
     <CardHeader>
       <CardTitle>{{resource.title}}</CardTitle>
@@ -27,17 +27,17 @@ await getApprovedResources()
       <CardDescription>{{resource.description}}</CardDescription>
     </CardContent>
     <CardFooter class="flex justify-between">
-      <Button variant="ghost">   
+      <Button variant="ghost">
         <iconify-icon
         icon="lucide:eye"
       />
       </Button>
-      <Button variant="ghost">   
+      <Button variant="ghost">
         <iconify-icon
         icon="lucide:heart"
       />
       </Button>
-      <Button variant="ghost">   
+      <Button variant="ghost">
         <iconify-icon
         icon="lucide:share-2"
       />
@@ -47,7 +47,7 @@ await getApprovedResources()
         icon="lucide:square-arrow-out-up-right"
       />
       </Button>
-      <Button variant="ghost">   
+      <Button variant="ghost">
         <iconify-icon
         icon="lucide:trash-2"
       />
