@@ -15,7 +15,7 @@
       Showcase yourself authentically and find the right connections.
     </span>
     <section class="flex w-full items-center justify-center space-x-4 py-4 md:pb-10">
-      <a href="/bio-data-form"
+      <a href="/login"
         class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 rounded-[6px]">
         Create Your Profile Now
       </a>
