@@ -7,6 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AddNewBioData: typeof import('./src/components/Vivaah/AddNewBioData.vue')['default']
     AppErrorDevSection: typeof import('./src/components/AppError/AppErrorDevSection.vue')['default']
     AppErrorPage: typeof import('./src/components/AppError/AppErrorPage.vue')['default']
     AppErrorProdSection: typeof import('./src/components/AppError/AppErrorProdSection.vue')['default']
@@ -25,6 +26,11 @@ declare module 'vue' {
     CardFooter: typeof import('./src/components/ui/card/CardFooter.vue')['default']
     CardHeader: typeof import('./src/components/ui/card/CardHeader.vue')['default']
     CardTitle: typeof import('./src/components/ui/card/CardTitle.vue')['default']
+    Carousel: typeof import('./src/components/ui/carousel/Carousel.vue')['default']
+    CarouselContent: typeof import('./src/components/ui/carousel/CarouselContent.vue')['default']
+    CarouselItem: typeof import('./src/components/ui/carousel/CarouselItem.vue')['default']
+    CarouselNext: typeof import('./src/components/ui/carousel/CarouselNext.vue')['default']
+    CarouselPrevious: typeof import('./src/components/ui/carousel/CarouselPrevious.vue')['default']
     copy: typeof import('./src/components/AppInPlaceEdit/AppInPlaceEditText copy.vue')['default']
     DataTable: typeof import('./src/components/ui/data-table/DataTable.vue')['default']
     DropdownMenu: typeof import('./src/components/ui/dropdown-menu/DropdownMenu.vue')['default']
@@ -41,8 +47,11 @@ declare module 'vue' {
     DropdownMenuSubContent: typeof import('./src/components/ui/dropdown-menu/DropdownMenuSubContent.vue')['default']
     DropdownMenuSubTrigger: typeof import('./src/components/ui/dropdown-menu/DropdownMenuSubTrigger.vue')['default']
     DropdownMenuTrigger: typeof import('./src/components/ui/dropdown-menu/DropdownMenuTrigger.vue')['default']
+    GuestLayout: typeof import('./src/components/Layout/main/GuestLayout.vue')['default']
     Input: typeof import('./src/components/ui/input/Input.vue')['default']
     Label: typeof import('./src/components/ui/label/Label.vue')['default']
+    LandingPage: typeof import('./src/components/Vivaah/LandingPage.vue')['default']
+    Profiles: typeof import('./src/components/Vivaah/Profiles.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Separator: typeof import('./src/components/ui/separator/Separator.vue')['default']

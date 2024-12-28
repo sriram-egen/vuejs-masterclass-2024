@@ -1,9 +1,14 @@
 <script setup lang="ts">
-usePageStore().pageData.title = "Homepage"
+import LandingPage from '@/components/Vivaah/LandingPage.vue';
+import Profiles from "@/components/Vivaah/Profiles.vue"
+
+const { user } = storeToRefs(useAuthStore())
+
 </script>
 
 <template>
-  <div>
-    <h1>Home Page</h1>
+  <LandingPage v-if="!user" />
+  <div v-else>
+    <Profiles />
   </div>
 </template>
