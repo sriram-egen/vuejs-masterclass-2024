@@ -9,6 +9,75 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      bio_data: {
+        Row: {
+          caste_subcaste: string
+          city: string | null
+          complexion: string | null
+          created_at: string | null
+          date_of_birth: string
+          devak_gotra: string
+          education_details: string | null
+          email: string
+          full_name: string
+          gender: string
+          height: string
+          hobbies: string | null
+          id: string
+          mangalik: boolean | null
+          marital_status: string | null
+          occupation: string
+          phone_number: string | null
+          state: string | null
+          time_of_birth: string
+          updated_at: string | null
+        }
+        Insert: {
+          caste_subcaste: string
+          city?: string | null
+          complexion?: string | null
+          created_at?: string | null
+          date_of_birth: string
+          devak_gotra: string
+          education_details?: string | null
+          email: string
+          full_name: string
+          gender: string
+          height: string
+          hobbies?: string | null
+          id?: string
+          mangalik?: boolean | null
+          marital_status?: string | null
+          occupation: string
+          phone_number?: string | null
+          state?: string | null
+          time_of_birth: string
+          updated_at?: string | null
+        }
+        Update: {
+          caste_subcaste?: string
+          city?: string | null
+          complexion?: string | null
+          created_at?: string | null
+          date_of_birth?: string
+          devak_gotra?: string
+          education_details?: string | null
+          email?: string
+          full_name?: string
+          gender?: string
+          height?: string
+          hobbies?: string | null
+          id?: string
+          mangalik?: boolean | null
+          marital_status?: string | null
+          occupation?: string
+          phone_number?: string | null
+          state?: string | null
+          time_of_birth?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null

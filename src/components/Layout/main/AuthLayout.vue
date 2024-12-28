@@ -1,32 +1,20 @@
 <script setup lang="ts">
-import { menuKey } from '@/utils/injectionKeys'
+import AddNewBioData from '@/components/Vivaah/AddNewBioData.vue';
 
 const { pageData } = storeToRefs(usePageStore())
 
-const taskSheetOpen = ref(false)
-
-const menuOpen = ref(false)
-const toggleMenu = () => (menuOpen.value = !menuOpen.value)
-
-provide(menuKey, {
-  menuOpen,
-  toggleMenu
-})
+const profileSheet = ref(false)
 </script>
 
 <template>
   <div>
-    <Sidebar @taskClicked="taskSheetOpen = true" />
-    <AppNewTask v-model="taskSheetOpen" />
+    <AddNewBioData v-model="profileSheet" />
 
-    <div
-      class="flex flex-col transition-[margin]"
-      :class="{ 'ml-52': menuOpen, 'ml-24': !menuOpen }"
-    >
-      <TopNavbar />
+    <div class="flex flex-col transition-[margin]">
+      <TopNavbar @addProfile="profileSheet = true" />
 
       <main class="flex flex-col flex-1 gap-4 p-4 lg:gap-6 lg:p-6">
-        <div class="flex items-center">
+        <div v-if="pageData.title" class="flex items-center">
           <h1 class="text-lg font-semibold md:text-2xl">
             {{ pageData.title }}
           </h1>

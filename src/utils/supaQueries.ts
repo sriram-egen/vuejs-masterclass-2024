@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabaseClient'
+import type { CreateBioData } from '@/types/CreateBioData'
 import type { CreateNewTask } from '@/types/CreateNewForm'
 import type { QueryData } from '@supabase/supabase-js'
 
@@ -86,3 +87,37 @@ export type Collabs = QueryData<ReturnType<typeof groupedProfilesQuery>>
 export const createNewTaskQuery = (newTask: CreateNewTask) => {
   return supabase.from('tasks').insert(newTask)
 }
+
+export const creatBioDataQuery = (bioData: CreateBioData) => {
+  return supabase.from('bio_data').insert(bioData)
+}
+
+export const bioDataProfilesQuery = supabase.from('bio_data').select(`
+  *,
+  profiles (
+    id
+  )
+`)
+export const deleteBioDataQuery = (id: number) => {
+  return supabase.from('bio_data').delete().eq('id', id)
+}
+
+export type BioDataProfiles = QueryData<typeof bioDataProfilesQuery>
+
+export const bioDataProfileQuery = (id: string) => {
+  return supabase
+    .from('bio_data')
+    .select(
+      `
+      *,
+      profiles (
+        id
+      )
+    `
+    )
+    .eq('id', id)
+    .single()
+}
+
+export type BioDataProfile = QueryData<ReturnType<typeof bioDataProfileQuery>>
+

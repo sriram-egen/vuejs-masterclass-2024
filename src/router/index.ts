@@ -8,19 +8,16 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   const authStore = (useAuthStore())
+  const { setAsGuest } = useAuthStore()
   await authStore.getSession()
+  if (to.params.profile_id) {
+    setAsGuest()
+  }
+  // const isAuthPage = ['/login', '/register'].includes(to.path)
 
-  const isAuthPage = ['/login', '/register'].includes(to.path)
-
-  if (!authStore.user && !isAuthPage) {
+  if (to.path === '/bio-data-form' && !authStore.user) {
     return {
       name: '/login'
-    }
-  }
-
-  if (authStore.user && isAuthPage) {
-    return {
-      name: '/'
     }
   }
 })

@@ -7,6 +7,7 @@ export const useAuthStore = defineStore('auth-store', () => {
   const user = ref<null | User>(null)
   const profile = ref<null | Tables<'profiles'>>(null)
   const isTrackingAuthChanges = ref(false)
+  const isGuest = ref(false)
 
   const setProfile = async () => {
     if (!user.value) {
@@ -51,12 +52,18 @@ export const useAuthStore = defineStore('auth-store', () => {
     })
   }
 
+  const setAsGuest = () => {
+    isGuest.value = true
+  }
+
   return {
     user,
     profile,
     setAuth,
     getSession,
-    trackAuthChanges
+    trackAuthChanges,
+    setAsGuest,
+    isGuest
   }
 })
 

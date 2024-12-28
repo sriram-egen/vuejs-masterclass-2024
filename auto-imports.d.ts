@@ -66,6 +66,7 @@ declare global {
   const unref: typeof import('vue')['unref']
   const useAttrs: typeof import('vue')['useAttrs']
   const useAuthStore: typeof import('./src/stores/auth')['useAuthStore']
+  const useBioProfilesStore: typeof import('./src/stores/loaders/profiles')['useBioProfilesStore']
   const useCollabs: typeof import('./src/composables/collab')['useCollabs']
   const useCssModule: typeof import('vue')['useCssModule']
   const useCssVars: typeof import('vue')['useCssVars']
