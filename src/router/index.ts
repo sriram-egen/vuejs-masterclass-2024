@@ -10,7 +10,7 @@ router.beforeEach(async (to) => {
   const authStore = (useAuthStore())
   const { setAsGuest } = useAuthStore()
   await authStore.getSession()
-  if (to.params.profile_id) {
+  if ('profile_id' in to.params && to.params.profile_id) {
     setAsGuest()
   }
   // const isAuthPage = ['/login', '/register'].includes(to.path)
